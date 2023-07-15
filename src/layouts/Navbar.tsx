@@ -2,7 +2,7 @@ import avatar from "../assets/Avatar.png"
 
 export default function Navbar() {
   return (
-    <div className="navbar bg-base-100 shadow-xl fixed top backdrop-blur-sm z-10">
+    <div className="navbar bg-base-100/30 shadow-xl fixed top backdrop-blur-md z-10">
       <div className="flex-1">
         <a className="font-bold text-xl pl-10 ">
           B<span className="text-orange-600">oo</span>k
