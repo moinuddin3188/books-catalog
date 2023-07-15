@@ -4,8 +4,16 @@
 import { Link, useParams } from "react-router-dom";
 import { useGetSingleBookQuery } from "../redux/features/book/bookApi";
 import { IBook } from "../types/book.interface";
+import { useState } from "react";
+import Modal from "../components/Modal";
 
 export default function BookDetails() {
+  const [opened, setOpened] = useState(false);
+
+  const controlModal = () => {
+    setOpened((prevState) => !prevState);
+  };
+
   const { id } = useParams();
   const { data, isLoading, isError } = useGetSingleBookQuery(id as string);
 
@@ -53,11 +61,21 @@ export default function BookDetails() {
               EDIT
             </button>
           </Link>
-          <button className="btn btn-error ml-8 rounded-md px-8">DELETE</button>
+          <button
+            onClick={controlModal}
+            className="btn btn-error ml-8 rounded-md px-8"
+          >
+            DELETE
+          </button>
         </div>
       </div>
     );
   }
 
-  return <div className="container-md mx-auto px-36">{content}</div>;
+  return (
+    <div className="container-md mx-auto px-36">
+      {content}
+      <Modal open={opened} control={controlModal} />
+    </div>
+  );
 }
