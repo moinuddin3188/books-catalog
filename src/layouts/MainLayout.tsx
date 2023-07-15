@@ -1,5 +1,9 @@
+import Navbar from "./Navbar";
+
 export default function MainLayout() {
   return (
-    <div>MainLayout</div>
+    <div>
+        <Navbar />
+    </div>
   )
 }
