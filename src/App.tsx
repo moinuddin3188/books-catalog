@@ -1,8 +1,11 @@
+import MainLayout from "./layouts/MainLayout"
 
 function App() {
 
   return (
-    <button className="btn btn-primary">Button</button>
+    <div>
+      <MainLayout />
+    </div>
   )
 }
 
