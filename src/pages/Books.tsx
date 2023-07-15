@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import BookCard from "../components/BookCard";
+import Footer from "../components/Footer";
 import { useGetBooksQuery } from "../redux/features/book/bookApi";
 import { IBook } from "../types/book.interface";
-import BookCard from "./BookCard";
 
-export default function Hero() {
-  const { data, isLoading, isError } =
-    useGetBooksQuery(undefined);
-  const { data: books }: {data: IBook[]} = data || {};
-
+export default function Books() {
+  const { data, isLoading, isError } = useGetBooksQuery(undefined);
+  console.log(data, "Data")
+  const { data: books }: { data: IBook[] } = data || {};
   //decide what to render
   let content = null;
 
@@ -34,9 +34,11 @@ export default function Hero() {
   }
 
   return (
-    <div className="pt-20">
-      <h2 className="font-bold text-lg text-center py-4">Recent Books</h2>
-      {content}
-    </div>
+    <>
+      <div className="container-md mx-auto px-36">
+        <div className="pt-20">{content}</div>
+      </div>
+      <Footer />
+    </>
   );
 }

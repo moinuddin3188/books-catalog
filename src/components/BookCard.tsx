@@ -1,26 +1,36 @@
-
+import { useNavigate } from "react-router-dom";
 import { IBook } from "../types/book.interface";
 
 interface IProps {
-  book: IBook
+  book: IBook;
 }
 
-export default function BookCard({book}: IProps) {
-  const {imageUrl, title} = book
+export default function BookCard({ book }: IProps) {
+  const { imageUrl, title, author, genre, publicationYear, id } = book;
+  const navigate = useNavigate();
+
+  const goToProductDetails = () => {
+    navigate(`/book-details/${id}`);
+  };
 
   return (
-    <div className="card card-compact bg-base-100 shadow-xl">
+    <div
+      onClick={() => goToProductDetails()}
+      className="card card-compact bg-base-100 shadow-xl cursor-pointer"
+    >
       <figure>
-        <img
-          src={imageUrl}
-          alt="Shoes"
-        />
+        <img src={imageUrl} alt="Shoes" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div className="card-actions justify-end">
-          <button className="btn btn-primary">Buy Now</button>
+        <div className="flex">
+          {genre.map((item: string) => (
+            <div className="badge mr-2 bg-red-200">{item}</div>
+          ))}
+        </div>
+        <div className="card-actions mt-4 font-semibold">
+          <p>{author}</p>
+          <p className="text-end">{publicationYear}</p>
         </div>
       </div>
     </div>
