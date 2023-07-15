@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import avatar from "../assets/Avatar.png"
 
 export default function Navbar() {
@@ -11,7 +12,7 @@ export default function Navbar() {
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>All Books</a>
+            <Link to={"/all-books"}>All Books</Link>
           </li>
           <li>
             <a>Sign In</a>

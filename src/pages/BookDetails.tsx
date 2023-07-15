@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetSingleBookQuery } from "../redux/features/book/bookApi";
 import { IBook } from "../types/book.interface";
 
@@ -47,18 +48,16 @@ export default function BookDetails() {
           <div>
             <p className="font-bold text-xl text-gray-600">PRICE. {price}$</p>
           </div>
-          <button className="btn btn-outline btn-primary rounded-md px-8">
-            EDIT
-          </button>
+          <Link to={`/edit-book/${id}`}>
+            <button className="btn btn-outline btn-primary rounded-md px-8">
+              EDIT
+            </button>
+          </Link>
           <button className="btn btn-error ml-8 rounded-md px-8">DELETE</button>
         </div>
       </div>
     );
   }
 
-  return (
-    <div className="container-md mx-auto px-36">
-      {content}
-    </div>
-  );
+  return <div className="container-md mx-auto px-36">{content}</div>;
 }
