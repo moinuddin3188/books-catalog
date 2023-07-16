@@ -7,7 +7,31 @@ const bookApi = api.injectEndpoints({
       query: () => "/books/recent-books",
     }),
     getBooks: builder.query({
-      query: () => "/books",
+      query: (data: {
+        searchTerm?: string;
+        genre?: string[];
+        publicationYear?: number;
+      }) => {
+        let queryString = "/books/?";
+
+        const { searchTerm, genre, publicationYear } = data;
+
+        if (genre) {
+          const genres = genre.map((item) => `genre=${item}`);
+          const queryUrl = genres.join("&");
+          queryString += queryUrl;
+        }
+        
+        if (publicationYear) {
+          queryString += `&publicationYear=${publicationYear}`;
+        }
+
+        if(searchTerm){
+          queryString += `&searchTerm=${searchTerm}`
+        }
+
+        return queryString;
+      },
     }),
     getSingleBook: builder.query({
       query: (id: string) => `/books/${id}`,
@@ -16,8 +40,8 @@ const bookApi = api.injectEndpoints({
       query: (data: Partial<IBook>) => ({
         url: "/books",
         method: "POST",
-        body: data
-      })
+        body: data,
+      }),
     }),
     updateBook: builder.mutation({
       query: ({ id, data }: { id: string; data: Partial<IBook> }) => ({
