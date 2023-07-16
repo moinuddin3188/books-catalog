@@ -6,6 +6,7 @@ import { useGetSingleBookQuery } from "../redux/features/book/bookApi";
 import { IBook } from "../types/book.interface";
 import { useState } from "react";
 import Modal from "../components/Modal";
+import Review from "../components/Review";
 
 export default function BookDetails() {
   const [opened, setOpened] = useState(false);
@@ -73,9 +74,12 @@ export default function BookDetails() {
   }
 
   return (
-    <div className="container-md mx-auto px-36">
-      {content}
-      <Modal open={opened} control={controlModal} />
-    </div>
+    <>
+      <div className="container-md mx-auto px-36">
+        {content}
+        <Modal open={opened} control={controlModal} />
+      </div>
+      <Review />
+    </>
   );
 }

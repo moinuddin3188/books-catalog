@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useGetBooksQuery } from "../redux/features/book/bookApi";
+import { useGetRecentBooksQuery } from "../redux/features/book/bookApi";
 import { IBook } from "../types/book.interface";
 import BookCard from "./BookCard";
 
 export default function Hero() {
   const { data, isLoading, isError } =
-    useGetBooksQuery(undefined);
+    useGetRecentBooksQuery(undefined);
   const { data: books }: {data: IBook[]} = data || {};
 
   //decide what to render
