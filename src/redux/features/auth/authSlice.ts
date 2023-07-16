@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface IUserInitialState {
   accessToken: undefined | string;
-  user: undefined;
+  user: undefined | {email: string, role: string};
 }
 
 const initialState: IUserInitialState = {
@@ -14,11 +14,11 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    userLogin: (state, action) => {
+    userLogin: (state, action: PayloadAction<IUserInitialState>) => {
       state.accessToken = action.payload.accessToken;
       state.user = action.payload.user;
     },
-    userLogout: (state, action) => {
+    userLogout: (state) => {
       state.accessToken = undefined;
       state.user = undefined;
     },

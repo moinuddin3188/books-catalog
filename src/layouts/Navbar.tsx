@@ -15,10 +15,10 @@ export default function Navbar() {
             <Link to={"/all-books"}>All Books</Link>
           </li>
           <li>
-            <a>Sign In</a>
+            <Link to={"/login"}>Sign In</Link>
           </li>
           <li>
-            <a>Sign Up</a>
+            <Link to={"/signup"}>Sign Up</Link>
           </li>
         </ul>
         <div className="w-8 rounded-full">
