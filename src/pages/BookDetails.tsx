@@ -7,6 +7,9 @@ import { IBook } from "../types/book.interface";
 import { useState } from "react";
 import Modal from "../components/Modal";
 import Review from "../components/Review";
+import Toast from "../components/ui/Toast";
+import Navbar from "../layouts/Navbar";
+import Footer from "../components/Footer";
 
 export default function BookDetails() {
   const [opened, setOpened] = useState(false);
@@ -15,8 +18,8 @@ export default function BookDetails() {
     setOpened((prevState) => !prevState);
   };
 
-  const { id } = useParams();
-  const { data, isLoading, isError } = useGetSingleBookQuery(id as string);
+  const { id } = useParams() as { id: string };
+  const { data, isLoading, isError } = useGetSingleBookQuery(id);
 
   //decide what to render
   let content = null;
@@ -34,7 +37,7 @@ export default function BookDetails() {
       data.data || {};
 
     content = (
-      <div className="grid grid-flow-row-dense grid-cols-3 gap-4 mt-10 shadow-lg bg-white">
+      <div className="grid grid-flow-row-dense grid-cols-3 gap-4 shadow-lg bg-white">
         <div className="col-span-1 p-10">
           <div className="p-4 border-orange-200 border-2">
             <img className="w-auto" src={imageUrl} alt="" />
@@ -75,11 +78,14 @@ export default function BookDetails() {
 
   return (
     <>
-      <div className="container-md mx-auto px-36">
+      <Navbar />
+      <div className="container-md mx-auto px-36 pt-32">
         {content}
-        <Modal open={opened} control={controlModal} />
+        <Modal open={opened} control={controlModal} id={id} />
       </div>
-      <Review />
+      <Review id={id} />
+      <Footer />
+      <Toast />
     </>
   );
 }

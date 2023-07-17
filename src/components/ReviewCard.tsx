@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import img from "../assets/Avatar.png";
+import { IReviewData } from "../types/review.interface";
 
-export default function ReviewCard() {
+export default function ReviewCard({ review }: { review: IReviewData }) {
+  const { user, review: userReview, postedAt } = review;
+console.log(review)
   return (
     <div className="mt-10 border-b">
       <div className="flex items-center">
@@ -11,17 +15,14 @@ export default function ReviewCard() {
         />
         <div className="pl-4">
           <p className="text-sm">
-            by <span className="text-primary">Author name</span>
+            by{" "}
+            <span className="text-primary">{`${user?.name?.firstName} ${user.name?.lastName}`}</span>
           </p>
-          <p className="a text-gray-600">Date</p>
+          <p className="a text-gray-600">{new Date(postedAt).toDateString()}</p>
         </div>
       </div>
       <div className="mt-5 text-lg pb-5">
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis
-          quaerat, quidem similique repudiandae non nulla aut vitae rem mollitia
-          velit totam animi tempora ad! Aliqu
-        </p>
+        <p>{userReview}</p>
       </div>
     </div>
   );

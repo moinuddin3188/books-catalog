@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface IUserInitialState {
   accessToken: undefined | string;
-  user: undefined | {email: string, role: string};
+  user: undefined | {email: string, role: string, id: string};
 }
 
 const initialState: IUserInitialState = {
@@ -30,6 +30,8 @@ const authSlice = createSlice({
     userLogout: (state) => {
       state.accessToken = undefined;
       state.user = undefined;
+
+      localStorage.removeItem('auth');
     },
   },
 });

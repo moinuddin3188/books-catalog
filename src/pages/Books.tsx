@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { FormEvent, useState, useRef } from "react";
+import { FormEvent, useState } from "react";
 import BookCard from "../components/BookCard";
 import Footer from "../components/Footer";
 import { useGetBooksQuery } from "../redux/features/book/bookApi";
 import { IBook } from "../types/book.interface";
 import { getYear } from "../utils/getYear";
 import Navbar from "../layouts/Navbar";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Toast from "../components/ui/Toast";
 
 const genres = [
   "Fiction",
@@ -104,10 +105,10 @@ export default function Books() {
             </button>
             <button
               type="button"
-              onClick={() => navigate("/book/add-book")}
+              onClick={() => navigate("/add-new-book")}
               className="btn btn-primary ml-2"
             >
-              + Add book
+              + Add New
             </button>
           </div>
         </form>
@@ -165,6 +166,7 @@ export default function Books() {
         </div>
       </div>
       <Footer />
+      <Toast />
     </>
   );
 }

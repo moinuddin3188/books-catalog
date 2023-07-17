@@ -39,6 +39,8 @@ export default function Signup() {
   useEffect(() => {
     if (isSuccess) {
       void login({ email, password });
+
+      navigate("/")
     }
   }, [data, isSuccess]);
 
@@ -47,7 +49,7 @@ export default function Signup() {
       dispatch(
         userLogin({
           accessToken: loginData?.data?.accessToken,
-          user: { email, role: "user" },
+          user: { email, role: "user", id: data?.data?._id },
         })
       );
     }

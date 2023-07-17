@@ -1,10 +1,39 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { useEffect } from "react";
+import { errorToast, successToast } from "../constants/toast";
+import { useDeleteBookMutation } from "../redux/features/book/bookApi";
+import { useNavigate } from "react-router-dom";
+
 export default function Modal({
   open,
   control,
+  id,
 }: {
   open: boolean;
   control: () => void;
+  id: string;
 }) {
+  const [deleteBook, { data, isSuccess, isError }] = useDeleteBookMutation();
+
+  const handleDelete = () => {
+    void deleteBook(id);
+  };
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isSuccess && data?.success) {
+      successToast("Deleted successfully!");
+
+      navigate("/all-books")
+    }
+
+    if (isError && !data?.success) {
+      errorToast("Failed to delete!");
+    }
+  }, [data, isSuccess, isError]);
+
   return (
     open && (
       <>
@@ -16,12 +45,12 @@ export default function Modal({
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Confirm to delete the book?
           </h2>
-          <div>
+          <div className="flex justify-center">
             <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
+              onClick={() => handleDelete()}
+              className="btn btn-error rounded-md"
             >
-              Send Message
+              Delete
             </button>
           </div>
         </div>

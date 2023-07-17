@@ -32,7 +32,7 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: "/book/add-book",
+    path: "/add-new-book",
     element: (
       <ProtectedRoute>
         <AddBook />

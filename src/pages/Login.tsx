@@ -5,35 +5,40 @@ import { useLoginMutation } from "../redux/features/auth/authApi";
 import { useAppDispatch } from "../redux/hook";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../redux/features/auth/authSlice";
+import { useGetUserQuery } from "../redux/features/user/userApi";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [userEmail, setUserEmail] = useState<string>("");
 
   const [login, { data, isLoading, isError }] = useLoginMutation();
   const dispatch = useAppDispatch();
-  
+
   const handleLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
     void login({ email, password });
+
+    setUserEmail(email);
   };
-  
 
   const navigate = useNavigate();
 
+  const { data: user, isLoading: userLoading } = useGetUserQuery(userEmail);
+
   useEffect(() => {
-    if (data?.data) {
+    if (data?.data && user?.data) {
       dispatch(
         userLogin({
-          accessToken: data.data.accessToken,
-          user: { email: email, role: "user" },
+          accessToken: data?.data?.accessToken,
+          user: { email: email, role: "user", id: user?.data?._id },
         })
       );
 
-      navigate("/")
+      navigate("/");
     }
-  }, [data, navigate]);
+  }, [data, navigate, user]);
 
   return (
     <div className="flex items-center justify-center h-screen">
@@ -74,11 +79,15 @@ export default function Login() {
 
           <div className="flex justify-center">
             <button
-              disabled={isLoading}
+              disabled={isLoading || userLoading}
               type="submit"
               className="bg-secondary text-white py-2 px-4 rounded hover:bg-secondary-focus"
             >
-              Login
+              {isLoading || userLoading ? (
+                <span className="loading loading-spinner text-neutral"></span>
+              ) : (
+                "Login"
+              )}
             </button>
           </div>
         </form>
