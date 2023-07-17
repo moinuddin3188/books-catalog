@@ -22,8 +22,10 @@ const bookApi = api.injectEndpoints({
           queryString += queryUrl;
         }
         
-        if (publicationYear) {
+        if (publicationYear && typeof(publicationYear) === "number") {
           queryString += `&publicationYear=${publicationYear}`;
+        } else {
+          queryString
         }
 
         if(searchTerm){
@@ -38,7 +40,7 @@ const bookApi = api.injectEndpoints({
     }),
     addBook: builder.mutation({
       query: (data: Partial<IBook>) => ({
-        url: "/books",
+        url: "/books/add-book",
         method: "POST",
         body: data,
       }),
@@ -63,5 +65,6 @@ export const {
   useGetRecentBooksQuery,
   useGetBooksQuery,
   useGetSingleBookQuery,
+  useAddBookMutation,
   useUpdateBookMutation,
 } = bookApi;

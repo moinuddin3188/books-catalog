@@ -9,7 +9,6 @@ import {
 import { useParams } from "react-router-dom";
 import { IBook } from "../types/book.interface";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function EditBook() {
   const { id } = useParams();

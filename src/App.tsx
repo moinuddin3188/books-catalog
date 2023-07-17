@@ -1,5 +1,6 @@
+import { RouterProvider } from "react-router-dom";
 import useAuthCheck from "./hooks/useAuthCheck";
-import MainLayout from "./layouts/MainLayout";
+import routes from "./routes/routes";
 
 function App() {
   const authChecked = useAuthCheck();
@@ -7,9 +8,7 @@ function App() {
   return !authChecked ? (
     <div>Checking authentication...</div>
   ) : (
-    <div>
-      <MainLayout />
-    </div>
+    <RouterProvider router={routes} />
   );
 }
 

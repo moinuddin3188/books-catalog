@@ -1,33 +1,46 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useRef } from "react";
 import BookCard from "../components/BookCard";
 import Footer from "../components/Footer";
 import { useGetBooksQuery } from "../redux/features/book/bookApi";
 import { IBook } from "../types/book.interface";
 import { getYear } from "../utils/getYear";
 import Navbar from "../layouts/Navbar";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const genres = ["Funny", "Drama", "Sci-fi", "Romance", "Action", "Adventure"];
+const genres = [
+  "Fiction",
+  "Classic",
+  "Fantasy",
+  "Young Adult",
+  "Dystopian",
+  "Romance",
+  "Adventure",
+  "Science Fiction",
+  "Modernist",
+  "Spiritual",
+];
 
 export default function Books() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [publicationYear, setPublicationYear] = useState<string>("");
+  const [input, setInput] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const { data, isLoading, isError, error, refetch } = useGetBooksQuery({
+  const { data, isLoading, isError, error } = useGetBooksQuery({
     genre: selectedGenres,
     publicationYear: Number(publicationYear),
+    searchTerm,
   });
   const { data: books }: { data: IBook[] } = data || {};
 
-  const handleFilter = (event: FormEvent<HTMLFormElement>) => {
+  const allYears = getYear();
+
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (selectedGenres && publicationYear) {
-      void refetch();
-    }
+    setSearchTerm(input);
   };
-
-  const allYears = getYear();
 
   const handleGenreChange = (genre: string) => {
     if (selectedGenres.includes(genre)) {
@@ -36,6 +49,16 @@ export default function Books() {
       setSelectedGenres([...selectedGenres, genre]);
     }
   };
+
+  const removeFilter = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    setPublicationYear("");
+    setSelectedGenres([]);
+    setSearchTerm("");
+  };
+
+  const navigate = useNavigate();
 
   //decide what to render
   let content = null;
@@ -67,11 +90,33 @@ export default function Books() {
     <>
       <Navbar />
       <div className="container-md mx-auto px-36 pt-32">
+        {/*-------->>>> Search bar  <<<<-------- */}
+        <form onSubmit={handleSearch}>
+          <div className="a mb-8 flex justify-center">
+            <input
+              onChange={(e) => setInput(e.target.value)}
+              type="text"
+              placeholder="Type here"
+              className="input input-bordered input-primary w-2/3"
+            />
+            <button type="submit" className="btn btn-secondary ml-2">
+              Search
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/book/add-book")}
+              className="btn btn-primary ml-2"
+            >
+              + Add book
+            </button>
+          </div>
+        </form>
+
         <div className="grid grid-cols-4 gap-8">
           {/*-------->>>> filter section  <<<<-------- */}
           <div className="col-span-1">
             <h1 className="font-bold text-lg">Filters</h1>
-            <form action="" onSubmit={handleFilter}>
+            <form id="filter" onReset={removeFilter}>
               <div className="form-control w-full rounded-md">
                 <label className="label">
                   <span className="label-text font-semibold">
@@ -83,9 +128,7 @@ export default function Books() {
                   onChange={(e) => setPublicationYear(e.target.value)}
                   className="select select-bordered rounded-md"
                 >
-                  <option disabled selected>
-                    Year
-                  </option>
+                  <option selected>All Year</option>
                   {allYears.map((x) => {
                     return <option key={x}>{x}</option>;
                   })}
@@ -108,10 +151,10 @@ export default function Books() {
               </div>
               <div className="mt-2">
                 <button
-                  type="submit"
+                  type="reset"
                   className="btn btn-primary rounded-md py-0.5"
                 >
-                  Apply
+                  Remove Filter
                 </button>
               </div>
             </form>

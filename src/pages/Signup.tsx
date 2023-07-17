@@ -51,16 +51,6 @@ export default function Signup() {
         })
       );
     }
-
-    localStorage.setItem(
-      "auth",
-      JSON.stringify({
-        accessToken: data.data.accessToken,
-        user: { email: email, role: "user" },
-      })
-    );
-
-    navigate("/");
   }, [loginSuccess, loginData]);
 
   return (

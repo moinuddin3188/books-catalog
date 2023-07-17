@@ -19,27 +19,19 @@ export default function Login() {
     void login({ email, password });
   };
   
-  console.log(data)
+
   const navigate = useNavigate();
 
   useEffect(() => {
     if (data?.data) {
-      navigate("/");
-
-      localStorage.setItem(
-        "auth",
-        JSON.stringify({
-          accessToken: data.data.accessToken,
-          user: { email: email, role: "user" }
-        })
-      );
-
       dispatch(
         userLogin({
           accessToken: data.data.accessToken,
           user: { email: email, role: "user" },
         })
       );
+
+      navigate("/")
     }
   }, [data, navigate]);
 

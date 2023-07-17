@@ -17,6 +17,15 @@ const authSlice = createSlice({
     userLogin: (state, action: PayloadAction<IUserInitialState>) => {
       state.accessToken = action.payload.accessToken;
       state.user = action.payload.user;
+
+      // set auth info to the localStorage when loggedIn
+      localStorage.setItem(
+        'auth',
+        JSON.stringify({
+          accessToken: action.payload.accessToken,
+          user: action.payload.user,
+        })
+      );
     },
     userLogout: (state) => {
       state.accessToken = undefined;

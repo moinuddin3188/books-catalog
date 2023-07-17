@@ -9,5 +9,5 @@ interface PublicRouteProps {
 export default function PublicRoute({ children }: PublicRouteProps) {
   const isLoggedIn = useAuth();
 
-  return !isLoggedIn ? children : <Navigate to="/teams" />;
+  return !isLoggedIn ? children : <Navigate to="/" />;
 }
