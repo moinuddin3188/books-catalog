@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { IBook } from "../../types/book.interface";
-import { useUpdateStatusMutation } from "../../redux/features/profile/profileApi";
+import {
+  useDeleteFromListMutation,
+  useUpdateStatusMutation,
+} from "../../redux/features/profile/profileApi";
 import { useAppSelector } from "../../redux/hook";
 
 export default function MyListCard({
@@ -10,25 +13,32 @@ export default function MyListCard({
 }) {
   const [toggle, setToggle] = useState<boolean>(false);
   const [select, setSelect] = useState<string>("");
-  const [changeStatus, setChangeStatus] = useState<string>("");
 
-  const {user} = useAppSelector(state => state.auth)
+  const { user } = useAppSelector((state) => state.auth);
 
-  const [updateStatus, { isLoading, isSuccess }] =
-    useUpdateStatusMutation();
+  const [updateStatus, { isLoading, isSuccess }] = useUpdateStatusMutation();
+  const [deleteBookFromList, { isLoading: deleteLoading }] =
+    useDeleteFromListMutation();
 
   const { book, status, _id } = list;
-  const { imageUrl, title, author } = book;
+  const { imageUrl, title, author, id } = book;
 
   const handleUpdateStatus = () => {
-    void updateStatus({email: user?.email, data: {id: _id, status: select}})
+    void updateStatus({
+      email: user?.email,
+      data: { id: _id, status: select },
+    });
+  };
+
+  const handleDelete = () => {
+    void deleteBookFromList({ email: user?.email, data: { book: id } });
   };
 
   useEffect(() => {
-    if(isSuccess){
-      setToggle(!toggle)
+    if (isSuccess) {
+      setToggle(!toggle);
     }
-  }, [isSuccess])
+  }, [isSuccess]);
 
   return (
     <tr>
@@ -79,7 +89,11 @@ export default function MyListCard({
             edit
           </button>
         )}
-        <button className="btn btn-xs btn-warning capitalize ml-2">
+        <button
+          disabled={deleteLoading}
+          onClick={() => handleDelete()}
+          className="btn btn-xs btn-warning capitalize ml-2"
+        >
           delete
         </button>
       </td>

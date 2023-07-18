@@ -12,6 +12,7 @@ import Navbar from "../layouts/Navbar";
 import Footer from "../components/Footer";
 import AddToListButton from "../components/AddToListButton";
 import AddToWishlistButton from "../components/AddToWishlistButton";
+import BookDetailLoader from "../components/ui/BookDetailLoader";
 
 export default function BookDetails() {
   const [opened, setOpened] = useState(false);
@@ -27,7 +28,7 @@ export default function BookDetails() {
   let content = null;
 
   if (isLoading) {
-    content = <h1>Loading</h1>;
+    content = <BookDetailLoader />;
   }
 
   if (!isLoading && isError) {

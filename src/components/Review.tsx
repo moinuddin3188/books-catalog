@@ -8,6 +8,7 @@ import {
   usePostReviewMutation,
 } from "../redux/features/review/reviewApi";
 import { IReview } from "../types/review.interface";
+import ReviewLoader from "./ui/ReviewLoader";
 
 export default function Review({ id }: { id: string }) {
   const [myReview, setMyReview] = useState<string>("");
@@ -35,12 +36,12 @@ export default function Review({ id }: { id: string }) {
 
     void postReview(data);
   };
-console.log(reviews)
+
   //decide what to render
   let content = null;
 
   if (isLoading) {
-    content = <h1>Loading</h1>;
+    content = <ReviewLoader />;
   }
 
   if (!isLoading && isError) {

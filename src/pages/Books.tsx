@@ -8,6 +8,7 @@ import { getYear } from "../utils/getYear";
 import Navbar from "../layouts/Navbar";
 import { useNavigate } from "react-router-dom";
 import Toast from "../components/ui/Toast";
+import CardLoader from "../components/ui/CardLoader";
 
 const genres = [
   "Fiction",
@@ -65,7 +66,15 @@ export default function Books() {
   let content = null;
 
   if (isLoading) {
-    content = <h1>Loading</h1>;
+    content = (
+      <div className="grid grid-cols-3 gap-8">
+        {Array(5)
+          .fill(undefined)
+          .map(() => (
+            <CardLoader />
+          ))}
+      </div>
+    );
   }
 
   if (!isLoading && isError) {
