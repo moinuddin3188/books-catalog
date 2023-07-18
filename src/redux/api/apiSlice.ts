@@ -23,6 +23,6 @@ export const api = createApi({
     }
     return result;
   },
-  tagTypes: ["Reviews"],
+  tagTypes: ["Reviews", "Wishlist", "MyList"],
   endpoints: () => ({}),
 });

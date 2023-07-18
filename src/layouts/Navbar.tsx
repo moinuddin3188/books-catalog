@@ -56,12 +56,12 @@ export default function Navbar() {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>
+                <Link to={"/profile/wishlist"}>
                   My Wishlist
-                </a>
+                </Link>
               </li>
               <li>
-                <a>My Book Shelf</a>
+                <Link to={"/profile/my-list"}>My List</Link>
               </li>
               <li onClick={() => handleLogOut()} className="border-t mt-4">
                 <a>Logout</a>

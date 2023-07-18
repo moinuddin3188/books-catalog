@@ -3,8 +3,8 @@ import img from "../assets/Avatar.png";
 import { IReviewData } from "../types/review.interface";
 
 export default function ReviewCard({ review }: { review: IReviewData }) {
-  const { user, review: userReview, postedAt } = review;
-console.log(review)
+  const { user, review: userReview, postedAt } = review || {};
+
   return (
     <div className="mt-10 border-b">
       <div className="flex items-center">

@@ -35,7 +35,7 @@ export default function Review({ id }: { id: string }) {
 
     void postReview(data);
   };
-
+console.log(reviews)
   //decide what to render
   let content = null;
 

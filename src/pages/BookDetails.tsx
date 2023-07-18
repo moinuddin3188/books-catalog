@@ -10,6 +10,8 @@ import Review from "../components/Review";
 import Toast from "../components/ui/Toast";
 import Navbar from "../layouts/Navbar";
 import Footer from "../components/Footer";
+import AddToListButton from "../components/AddToListButton";
+import AddToWishlistButton from "../components/AddToWishlistButton";
 
 export default function BookDetails() {
   const [opened, setOpened] = useState(false);
@@ -33,7 +35,7 @@ export default function BookDetails() {
   }
 
   if (!isLoading && !isError && data) {
-    const { title, author, publicationYear, price, imageUrl, genre }: IBook =
+    const { title, author, publicationYear, price, imageUrl, genre, _id }: IBook & {_id: string} =
       data.data || {};
 
     content = (
@@ -60,6 +62,8 @@ export default function BookDetails() {
           <div>
             <p className="font-bold text-xl text-gray-600">PRICE. {price}$</p>
           </div>
+          <AddToWishlistButton bookId={_id} />
+          <AddToListButton bookId={_id} />
           <Link to={`/edit-book/${id}`}>
             <button className="btn btn-outline btn-primary rounded-md px-8">
               EDIT
