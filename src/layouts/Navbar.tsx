@@ -56,15 +56,14 @@ export default function Navbar() {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
+                <a>
+                  My Wishlist
                 </a>
               </li>
               <li>
-                <a>Settings</a>
+                <a>My Book Shelf</a>
               </li>
-              <li onClick={() => handleLogOut()}>
+              <li onClick={() => handleLogOut()} className="border-t mt-4">
                 <a>Logout</a>
               </li>
             </ul>

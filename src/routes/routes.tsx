@@ -9,6 +9,8 @@ import NotFound from "../pages/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
 import Home from "../pages/Home";
+import WishList from "../components/profile/WishList";
+import Profile from "../pages/Profile";
 
 const routes = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ const routes = createBrowserRouter([
         <AddBook />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "/profile/wishlist",
+    element: <Profile />,
+  },
+  {
+    path: "/profile/my-list",
+    element: <Profile />,
   },
   {
     path: "/signup",

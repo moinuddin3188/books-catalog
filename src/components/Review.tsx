@@ -20,7 +20,7 @@ export default function Review({ id }: { id: string }) {
   ] = usePostReviewMutation();
   const { data, isLoading, isError } = useGetReviewQuery(id);
   const { data: review }: { data: IReview } = data || {};
-  const {reviews} = review || {}
+  const { reviews } = review || {};
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -59,29 +59,31 @@ export default function Review({ id }: { id: string }) {
     <div className="container-md mx-auto px-36 mt-10">
       <div className="shadow-lg bg-white rounded-md p-10">
         <h1 className="font-semibold text-3xl">Reviews</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="flex w-4/5 mt-5">
-            <div className="form-control flex-grow mr-10">
-              <label className="label">
-                <span className="label-text text-lg">Your Review</span>
-              </label>
-              <textarea
-                onChange={(e) => setMyReview(e.target.value)}
-                className="textarea textarea-bordered h-24 rounded-md"
-                placeholder="Review"
-              ></textarea>
+        {user?.email && (
+          <form onSubmit={handleSubmit}>
+            <div className="flex w-4/5 mt-5">
+              <div className="form-control flex-grow mr-10">
+                <label className="label">
+                  <span className="label-text text-lg">Your Review</span>
+                </label>
+                <textarea
+                  onChange={(e) => setMyReview(e.target.value)}
+                  className="textarea textarea-bordered h-24 rounded-md"
+                  placeholder="Review"
+                ></textarea>
+              </div>
+              <div className="self-end">
+                <button
+                  disabled={postReviewLoading}
+                  type="submit"
+                  className="btn btn-secondary capitalize rounded-md"
+                >
+                  Submit
+                </button>
+              </div>
             </div>
-            <div className="self-end">
-              <button
-                disabled={postReviewLoading}
-                type="submit"
-                className="btn btn-secondary capitalize rounded-md"
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-        </form>
+          </form>
+        )}
         {content}
       </div>
     </div>
