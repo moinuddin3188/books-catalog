@@ -17,7 +17,7 @@ export default function Review({ id }: { id: string }) {
 
   const [
     postReview,
-    { isLoading: postReviewLoading, isError: postReviewError },
+    { isLoading: postReviewLoading },
   ] = usePostReviewMutation();
   const { data, isLoading, isError } = useGetReviewQuery(id);
   const { data: review }: { data: IReview } = data || {};

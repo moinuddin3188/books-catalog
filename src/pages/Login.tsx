@@ -12,7 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string>("");
 
-  const [login, { data, isLoading, isError }] = useLoginMutation();
+  const [login, { data, isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
 
   const handleLogin = (event: FormEvent<HTMLFormElement>) => {
